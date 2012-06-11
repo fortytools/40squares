@@ -1,4 +1,4 @@
 40squares
 =========
 
-FHW Programmierwettbewerb5
+FHW Programmierwettbewerb
