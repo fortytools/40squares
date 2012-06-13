@@ -28,9 +28,11 @@ main = do
   if debug  then do
     available <- return $ foldr (\t r -> r + t * t) 0 tiles'
     target <- return $ size' * size'
-    putStrLn $ "available: " ++ (show available)
+    best <- return $ score $ last results
+    putStrLn $ "avail : " ++ (show available)
     putStrLn $ "target: " ++ (show target)
-    putStrLn $ "missed: " ++ (show $ target - (score $ last results))
+    putStrLn $ "best  : " ++ (show best)
+    putStrLn $ "missed: " ++ (show $ (min available target) - best)
     putStrLn $ "results: " ++ (show $ length results)
     else return ()
 
