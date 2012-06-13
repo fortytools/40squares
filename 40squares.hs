@@ -19,16 +19,20 @@ main = do
 
   if debug then do
     putStrLn $ "tiles: " ++ show tiles' ++ " size: " ++ show size'
-    putStrLn $ "target: " ++ show (size' * size')
     else return ()
 
+  -- GO GO GO!
   results <- return $ (onlyBetter 0) $ compute tiles' size'
+  mapM_ (flushPrint debug) results
 
   if debug  then do
+    available <- return $ foldr (\t r -> r + t * t) 0 tiles'
+    target <- return $ size' * size'
+    putStrLn $ "available: " ++ (show available)
+    putStrLn $ "target: " ++ (show target)
+    putStrLn $ "missed: " ++ (show $ target - (score $ last results))
     putStrLn $ "results: " ++ (show $ length results)
     else return ()
-
-  mapM_ (flushPrint debug) results
 
   exitWith ExitSuccess
 
