@@ -11,6 +11,8 @@ run:
 
 clean:
 	rm 40squares
+	rm *.o
+	rm *.hi
 
 test:
 	(echo "[2,4,40]"; echo "42"; cat) | ./40squares $(RUN_OPTS)
