@@ -1,7 +1,7 @@
 RUN_OPTS = +RTS -N4 -RTS
 
 all:
-	ghc -rtsopts -Wall -threaded -feager-blackholing --make 40squares.hs
+	ghc -O2 -rtsopts -Wall -threaded -feager-blackholing --make 40squares.hs
 
 name:
 	@echo "40squares"

@@ -1,3 +1,5 @@
 *.hi
 *.o
 40squares
+tmp
+*.swp
