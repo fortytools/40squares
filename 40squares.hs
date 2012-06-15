@@ -3,38 +3,39 @@ module Main where
 import System.IO
 import System.Exit
 import System.Environment
+import Control.Monad
 
 import Search
 
 main :: IO ()
 main = do
   args <- getArgs
-  debug <- return $ "--debug" `elem` args
+  let
+    debug = "--debug" `elem` args
 
   tiles <- getLine
   size <- getLine
 
-  tiles' <- return $ read tiles
-  size' <- return $ read size
+  let
+    tiles' = read tiles
+    size' = read size
 
-  if debug then do
+  when debug $ do
     putStrLn $ "tiles: " ++ show tiles' ++ " size: " ++ show size'
-    else return ()
 
   -- GO GO GO!
-  results <- return $ (onlyBetter 0) $ compute tiles' size'
+  results <- return $ (onlyBetter 0) $ rbrtCompute tiles' size'
   mapM_ (flushPrint debug) results
 
-  if debug  then do
+  when debug $ do
     available <- return $ foldr (\t r -> r + t * t) 0 tiles'
     target <- return $ size' * size'
     best <- return $ score $ last results
     putStrLn $ "avail : " ++ (show available)
     putStrLn $ "target: " ++ (show target)
-    putStrLn $ "best  : " ++ (show best)
+    putStrLn $ "best  : " ++ (show best) ++ " (" ++ show (fromIntegral best / fromIntegral target * (100 :: Double)) ++ ")"
     putStrLn $ "missed: " ++ (show $ (min available target) - best)
     putStrLn $ "results: " ++ (show $ length results)
-    else return ()
 
   exitWith ExitSuccess
 
