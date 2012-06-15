@@ -39,8 +39,30 @@ rc x y w h rs' sts ats@(t:ts) | w <= 0 || h <= 0 = (rs', move ats sts)
                               | otherwise =
                                 let
                                   rs = (x,y,t): rs'
-                                  (rd,sd) = rc (x+t) (y+t) (w-t) (h-t) rs [] $ move sts ts
+                                  (rd,sd) = rc (x+t) (y+t) (w-t) (h-t) rs [] ts
                                   (rt,st) = rc x (y+t) t (h-t) rd [] $ reverse sd
                                   (rr,sr) = rc (x+t) y (w-t) t rt [] $ reverse st
                                 in
-                                  (rr,sr)
+                                  (rr,sr ++ sts)
+
+{-
+
+rbrtCompute [3,3,2,2,2,2,2] 6
+
+Ergebnis:
+...333
+22.333
+22.333
+333...
+33322.
+33322.
+
+Besser:
+222222
+222222
+....22
+333.22
+333.22
+333.22
+
+-}

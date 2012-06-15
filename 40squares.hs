@@ -31,9 +31,9 @@ main = do
     available <- return $ foldr (\t r -> r + t * t) 0 tiles'
     target <- return $ size' * size'
     best <- return $ score $ last results
-    putStrLn $ "avail : " ++ (show available)
+    putStrLn $ "avail : " ++ (show available) ++ " (used: " ++ show (fromIntegral best / fromIntegral available * (100 :: Double)) ++ " %)"
     putStrLn $ "target: " ++ (show target)
-    putStrLn $ "best  : " ++ (show best) ++ " (" ++ show (fromIntegral best / fromIntegral target * (100 :: Double)) ++ ")"
+    putStrLn $ "best  : " ++ (show best) ++ " (filled: " ++ show (fromIntegral best / fromIntegral target * (100 :: Double)) ++ " %)"
     putStrLn $ "missed: " ++ (show $ (min available target) - best)
     putStrLn $ "results: " ++ (show $ length results)
 
